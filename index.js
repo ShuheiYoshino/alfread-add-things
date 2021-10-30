@@ -1,8 +1,19 @@
 import alfy from 'alfy'
+import sgMail from '@sendgrid/mail'
+import dotenv from 'dotenv'
+dotenv.config()
+sgMail.setApiKey(process.env.API_KEY)
 
-const items = [
-  { title: 'hello, Alfred', subtitle: 'alfred subtitle', arg: 'alfred' },
-  { title: 'hello, Node', subtitle: 'node subtitle', arg: 'node' },
-]
+const input = alfy.input
+const [taskName, description] = input.split('-d').map(el => el.trim())
+const msg = {
+  to: process.env.THINGS_EMAIL,
+  from: process.env.MY_EMAIL,
+  subject: taskName,
+  text: description || 'This task added by Alfred.'
+}
 
-alfy.output(items)
+sgMail.send(msg).catch(e => {
+  console.log(e)
+  throw new Error(e)
+})

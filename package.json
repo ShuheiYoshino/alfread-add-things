@@ -7,6 +7,8 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "alfy": "^0.12.1"
+    "@sendgrid/mail": "^7.5.0",
+    "alfy": "^0.12.1",
+    "dotenv": "^10.0.0"
   }
 }
